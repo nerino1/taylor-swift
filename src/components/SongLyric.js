@@ -1,7 +1,8 @@
 // @flow
 import "../style/SongLyric.css";
 import { boldQueries } from "./utils.js";
-import React from "react";
+import LyricsModal from "./LyricsModal.js";
+import React, { useState } from "react";
 
 type SongLyricProps = {
   album: string,
@@ -20,8 +21,16 @@ export default function SongLyric({
   next,
   queries,
 }: SongLyricProps): React$MixedElement {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="SongLyric">
+      <LyricsModal
+        song={song}
+        album={album}
+        display={showModal}
+        handler={() => setShowModal(false)}
+      />
       <p>
         {prev}
         {prev.length > 0 ? <br /> : ""}
@@ -34,7 +43,12 @@ export default function SongLyric({
         {next.length > 0 ? <br /> : ""}
         {next}
       </p>
-      {song}
+      <button
+        className="SongLyric-songlink"
+        onClick={() => setShowModal(true)}
+      >
+        {song}
+      </button>
       {album !== "NaN" ? "," : ""} <i>{album !== "NaN" ? album : ""}</i>
       <hr></hr>
     </div>
