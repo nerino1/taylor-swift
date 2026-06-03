@@ -14,3 +14,19 @@ p {
 .query {
   background-color: rgb(220, 220, 250);
 }
+
+.SongLyric-songlink {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #5b5bd6;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+.SongLyric-songlink:hover {
+  color: #3a3aab;
+}
