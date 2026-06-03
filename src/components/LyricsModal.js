@@ -2,7 +2,7 @@
 import "../style/LyricsModal.css";
 import React from "react";
 
-const lyricsJSON = require("../taylor-swift-lyrics/lyrics.json");
+const songsJSON = require("../taylor-swift-lyrics/songs.json");
 
 type LyricsModalProps = {
   song: string,
@@ -19,56 +19,27 @@ export default function LyricsModal({
 }: LyricsModalProps): React$MixedElement {
   if (!display) return <></>;
 
-  // Find the raw album key by searching lyricsJSON for the song
-  let rawAlbum = album;
-  let songLines = [];
-  for (const albumKey in lyricsJSON) {
-    if (lyricsJSON[albumKey][song] !== undefined) {
-      rawAlbum = albumKey;
-      songLines = lyricsJSON[albumKey][song];
+  let rawLyrics = "";
+  for (const albumKey in songsJSON) {
+    if (songsJSON[albumKey][song] !== undefined) {
+      rawLyrics = songsJSON[albumKey][song];
       break;
     }
   }
 
-  // Reconstruct ordered lyrics from the linked-list structure
-  // Each line has: lyric, prev, next
-  const buildLyricsList = (lines) => {
-    // Find the first line (prev === "")
-    const first = lines.find((l) => l.prev === "");
-    if (!first) return lines.map((l) => l.lyric);
-
-    const ordered = [];
-    let current = first;
-    const visited = new Set();
-
-    while (current && !visited.has(current.lyric)) {
-      visited.add(current.lyric);
-      ordered.push(current.lyric);
-      if (!current.next || current.next === "") break;
-      const nextLine = lines.find((l) => l.lyric === current.next && !visited.has(l.lyric));
-      if (!nextLine) break;
-      current = nextLine;
-    }
-
-    return ordered;
-  };
-
-  const orderedLyrics = buildLyricsList(songLines);
+  const lines = rawLyrics.split("\n");
 
   return (
     <div className="LyricsModal-overlay" onClick={handler}>
-      <div
-        className="LyricsModal"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="LyricsModal" onClick={(e) => e.stopPropagation()}>
         <button className="LyricsModal-close" onClick={handler} aria-label="Close">
           ✕
         </button>
         <h2 className="LyricsModal-title">{song}</h2>
-        <p className="LyricsModal-album"><i>{rawAlbum !== "NaN" ? rawAlbum : ""}</i></p>
+        <p className="LyricsModal-album"><i>{album !== "NaN" ? album : ""}</i></p>
         <div className="LyricsModal-lyrics">
-          {orderedLyrics.map((line, i) => (
-            <p key={i} className={line === "" ? "LyricsModal-break" : "LyricsModal-line"}>
+          {lines.map((line, i) => (
+            <p key={i} className={line.startsWith("[") ? "LyricsModal-section" : "LyricsModal-line"}>
               {line === "" ? "\u00A0" : line}
             </p>
           ))}
