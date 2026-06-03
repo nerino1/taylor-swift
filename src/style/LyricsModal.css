@@ -1,0 +1,75 @@
+.LyricsModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.LyricsModal {
+  background: white;
+  border-radius: 12px;
+  padding: 32px 36px;
+  max-width: 560px;
+  width: 90%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.LyricsModal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.LyricsModal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.LyricsModal-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  padding-right: 24px;
+}
+
+.LyricsModal-album {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px 0;
+}
+
+.LyricsModal-lyrics {
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 8px;
+}
+
+.LyricsModal-line {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.LyricsModal-break {
+  margin: 0;
+  height: 14px;
+}
